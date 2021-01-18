@@ -49,9 +49,12 @@ public class StudentService {
     public List<Team> getPartition() { return partition;}
 
     public void newPartition() {
-        List<Student> shuffledList = students;
+        List<Student> shuffledList = new ArrayList<Student>(students);
         Collections.shuffle(shuffledList);
 
+        for(Team team : partition) {
+            team.clearMember();
+        }
         int j = 0;
         for(Student student : shuffledList) {
             Team team = partition.get(j % 6);

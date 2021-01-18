@@ -23,4 +23,8 @@ public class Team {
     public List<Integer> getMember() {
         return member;
     }
+
+    public void clearMember() {
+        member.clear();
+    }
 }
