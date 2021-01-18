@@ -39,22 +39,22 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(15)));
 
-        mvc.perform(post("/partition")).andExpect(status().isOk())
+        mvc.perform(get("/partition")).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(6)))
-                .andExpect(jsonPath("$[0]['team_name']").value("1 组"))
-                .andExpect(jsonPath("$[0]['students_id']", hasSize(3)))
-                .andExpect(jsonPath("$[1]['team_name']").value("2 组"))
-                .andExpect(jsonPath("$[1]['student_id']", hasSize(3)))
-                .andExpect(jsonPath("$[2]['team_name']").value("3 组"))
-                .andExpect(jsonPath("$[2]['student_id']", hasSize(3)))
-                .andExpect(jsonPath("$[3]['team_name']").value("4 组"))
-                .andExpect(jsonPath("$[3]['student_id']", hasSize(2)))
-                .andExpect(jsonPath("$[4]['team_name']").value("5 组"))
-                .andExpect(jsonPath("$[4]['student_id']", hasSize(2)))
-                .andExpect(jsonPath("$[5]['team_name']").value("6 组"))
-                .andExpect(jsonPath("$[6]['student_id']", hasSize(2)));
+                .andExpect(jsonPath("$[0]['name']").value("1 组"))
+                .andExpect(jsonPath("$[0]['member']", hasSize(3)))
+                .andExpect(jsonPath("$[1]['name']").value("2 组"))
+                .andExpect(jsonPath("$[1]['member']", hasSize(3)))
+                .andExpect(jsonPath("$[2]['name']").value("3 组"))
+                .andExpect(jsonPath("$[2]['member']", hasSize(3)))
+                .andExpect(jsonPath("$[3]['name']").value("4 组"))
+                .andExpect(jsonPath("$[3]['member']", hasSize(2)))
+                .andExpect(jsonPath("$[4]['name']").value("5 组"))
+                .andExpect(jsonPath("$[4]['member']", hasSize(2)))
+                .andExpect(jsonPath("$[5]['name']").value("6 组"))
+                .andExpect(jsonPath("$[5]['member']", hasSize(2)));
     }
 
 
@@ -66,8 +66,9 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(15)));
 
+        String studentName = "哥斯拉";
         mvc.perform(post("/student")
-                .param("name", "哥斯拉")
+                .param("name", studentName)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -77,6 +78,6 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(16)))
                 .andExpect(jsonPath("$[15].id").value(16))
-                .andExpect(jsonPath("$[15].name").value("哥斯拉"));
+                .andExpect(jsonPath("$[15].name").value(studentName));
     }
 }

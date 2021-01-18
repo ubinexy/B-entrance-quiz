@@ -1,9 +1,11 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
 import com.thoughtworks.capability.gtb.entrancequiz.entity.Student;
+import com.thoughtworks.capability.gtb.entrancequiz.entity.Team;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -27,11 +29,34 @@ public class StudentService {
         add(new Student("蔡文姬"));
     }};
 
+    private List<Team> partition = new ArrayList<Team>() {{
+        add(new Team("1 组"));
+        add(new Team("2 组"));
+        add(new Team("3 组"));
+        add(new Team("4 组"));
+        add(new Team("5 组"));
+        add(new Team("6 组"));
+    }};
+
     public List<Student> getStudents() {
         return students;
     }
 
     public void addStudent(String name) {
         students.add(new Student(name));
+    }
+
+    public List<Team> getPartition() { return partition;}
+
+    public void newPartition() {
+        List<Student> shuffledList = students;
+        Collections.shuffle(shuffledList);
+
+        int j = 0;
+        for(Student student : shuffledList) {
+            Team team = partition.get(j % 6);
+            team.addMember(student.getId());
+            ++j;
+        }
     }
 }
